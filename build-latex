@@ -1,0 +1,28 @@
+#!/bin/bash
+# [Gedit Tool]
+# Name=run
+# Languages=latex
+# Input=nothing
+# Output=output-panel
+# Applicability=all
+# Save-files=all
+# Shortcut=F5
+
+base_name=${GEDIT_CURRENT_DOCUMENT_NAME::-4}
+
+count=`ls -1 *.bib 2>/dev/null | wc -l`
+if [ $count != 0 ]; then
+    echo "found bib"
+    latex $base_name
+    bibtex $base_name
+    latex $base_name
+elif cat "$GEDIT_CURRENT_DOCUMENT_NAME" | grep '\\ref{[^}]*}' >/dev/null ; then
+    latex $base_name
+fi
+
+
+pdflatex $base_name
+
+evince "$(basename "$GEDIT_CURRENT_DOCUMENT_NAME" .tex).pdf" || true
+
+wmctrl -a $GEDIT_CURRENT_DOCUMENT_NAME

@@ -1,0 +1,11 @@
+#!/bin/sh
+# [Gedit Tool]
+# Name=run
+# Shortcut=F5
+# Input=nothing
+# Output=output-panel
+# Applicability=local
+# Save-files=all
+# Languages=python,python3
+
+python3 $GEDIT_CURRENT_DOCUMENT_NAME
